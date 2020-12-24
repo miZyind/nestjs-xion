@@ -1,0 +1,34 @@
+/* TSConfig Reference https://www.typescriptlang.org/tsconfig */
+{
+  "compilerOptions": {
+    /* Project Options */
+    "target": "ESNext",
+    "module": "commonjs",
+    "rootDir": "src",
+    "outDir": "lib",
+    "declaration": true,
+    "importHelpers": true,
+    "removeComments": true,
+    "isolatedModules": true,
+    /* Strict Checks */
+    "strict": true,
+    /* Module Resolution */
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    /* Linter Checks */
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    /* Experimental */
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    /* Advanced */
+    "forceConsistentCasingInFileNames": true,
+    "preserveConstEnums": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  }
+}
