@@ -1,6 +1,7 @@
 # nestjs-xion
 
 [![NodeJS](https://img.shields.io/badge/->=14-339933?style=for-the-badge&label=&logo=node.js&logoColor=fff)](https://nodejs.org)
+[![NPM](https://img.shields.io/npm/v/nestjs-xion?style=for-the-badge&label=&color=cb3837&logo=npm)](https://www.npmjs.com/package/nestjs-xion)
 [![Yarn](https://img.shields.io/badge/-~=1.22-2c8ebb?style=for-the-badge&label=&logo=yarn&logoColor=fff)](https://classic.yarnpkg.com)
 [![NestJS](https://img.shields.io/github/package-json/dependency-version/mizyind/nestjs-xion/@nestjs/common?style=for-the-badge&label=&color=e0234e&logo=nestjs)](https://nestjs.com)
 [![TypeScript](https://img.shields.io/github/package-json/dependency-version/mizyind/nestjs-xion/dev/typescript?style=for-the-badge&label=&color=007acc&logo=typescript)](https://www.typescriptlang.org)
