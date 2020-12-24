@@ -7,7 +7,7 @@
 [![Prettier](https://img.shields.io/npm/dependency-version/eslint-plugin-mizyind/prettier?style=for-the-badge&label=&color=f7b93e&logo=prettier&logoColor=fff)](https://prettier.io)
 [![ESLint](https://img.shields.io/npm/dependency-version/eslint-plugin-mizyind/eslint?style=for-the-badge&label=&color=4b32c3&logo=eslint&logoColor=fff)](https://eslint.org)
 
-XION, short for **eXcogitative Intergation Of NestJS**.
+XION, short for **eXcogitative Integration Of NestJS**.
 
 ## 💠 Requirement
 
