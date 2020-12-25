@@ -22,6 +22,7 @@ XION, short for **eXcogitative Integration Of NestJS**.
   - **[@nestjsx/crud](https://github.com/nestjsx/crud)** - Nest CRUD for RESTful APIs.
 - **[Swagger](https://swagger.io)** - API Documentation & Design Tools for Teams.
 - **[RxJS](https://rxjs.dev)** - A reactive programming library for JS.
+- **[Class Validator](https://github.com/typestack/class-validator)** - Decorator-based property validation for classes.
 - **[TypeScript](https://www.typescriptlang.org)** - Typed JS at Any Scale.
   - **[tslib](https://github.com/microsoft/tslib)** - Runtime library for TypeScript helpers.
 - **[Prettier](https://prettier.io)** - Opinionated Code Formatter.
