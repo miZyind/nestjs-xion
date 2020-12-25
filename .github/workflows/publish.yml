@@ -17,7 +17,6 @@ jobs:
       - run: yarn
       - run: yarn build
       - run: cp LICENSE package.json README.md $OUT_DIR
-      - run: cd $OUT_DIR
-      - run: npm publish
+      - run: npm publish $OUT_DIR
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
