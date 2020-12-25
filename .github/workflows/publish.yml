@@ -6,6 +6,8 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
+    env:
+      OUT_DIR: ${{ 'lib' }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -14,6 +16,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: yarn
       - run: yarn build
+      - run: cp LICENSE package.json README.md $OUT_DIR
+      - run: cd $OUT_DIR
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
