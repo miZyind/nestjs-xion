@@ -9,12 +9,12 @@
   "bugs": {
     "url": "https://github.com/miZyind/nestjs-xion/issues"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint src --max-warnings 0"
-  },
-  "engines": {
-    "node": ">=14"
   },
   "keywords": [
     "nestjs",
