@@ -1,10 +1,10 @@
-import { HttpStatus } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { HttpStatus, UseGuards, createParamDecorator } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse, ApiSecurity } from '@nestjs/swagger';
 
 import { Standardized, StandardizedList } from './standardizer';
 
-import type { Type } from '@nestjs/common';
-
+import type { ExecutionContext, Type } from '@nestjs/common';
 interface ApiResponseOptions {
   status?: HttpStatus;
   description?: string;
@@ -13,23 +13,37 @@ interface ApiResponseOptions {
 export function ApiStandardResponse<T>(
   options?: ApiResponseOptions & { type?: Type<T> },
 ): MethodDecorator {
-  return (target, key, descriptor): void => {
+  return (...params): void => {
     ApiResponse({
       status: options?.status ?? HttpStatus.OK,
       type: Standardized(options?.type),
       description: options?.description,
-    })(target, key, descriptor);
+    })(...params);
   };
 }
 
 export function ApiStandardListResponse<T>(
   options: ApiResponseOptions & { type: Type<T> },
 ): MethodDecorator {
-  return (target, key, descriptor): void => {
+  return (...params): void => {
     ApiResponse({
       status: options.status ?? HttpStatus.OK,
       type: StandardizedList(options.type),
       description: options.description,
-    })(target, key, descriptor);
+    })(...params);
   };
+}
+
+export function StrategyGuard(name: string): MethodDecorator {
+  return (...params): void => {
+    UseGuards(AuthGuard(name))(...params);
+    ApiSecurity(name)(...params);
+  };
+}
+
+export function User(): ParameterDecorator {
+  return createParamDecorator(
+    (_, ctx: ExecutionContext) =>
+      ctx.switchToHttp().getRequest<{ user: unknown }>().user,
+  )();
 }
