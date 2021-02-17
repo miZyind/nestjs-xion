@@ -6,19 +6,24 @@ import {
   IsUUID,
 } from 'class-validator';
 
+import { ApiProperty } from '@nestjs/swagger';
+
 export class UUIDParamDTO {
   @IsUUID()
-  uuid!: string;
+  @ApiProperty({ type: 'string', format: 'uuid' })
+  readonly uuid!: string;
 }
 
 export class StringIDParamDTO {
   @IsNotEmpty()
   @IsString()
-  id!: string;
+  @ApiProperty({ type: 'string' })
+  readonly id!: string;
 }
 
 export class IntIDParamDTO {
   @IsPositive()
   @IsInt()
-  id!: number;
+  @ApiProperty({ type: 'integer', minimum: 1 })
+  readonly id!: number;
 }
