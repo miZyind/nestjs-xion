@@ -11,13 +11,13 @@ export class UUIDParamDTO {
   uuid!: string;
 }
 
-export class StringIDParamDto {
+export class StringIDParamDTO {
   @IsNotEmpty()
   @IsString()
   id!: string;
 }
 
-export class IntIDParamDto {
+export class IntIDParamDTO {
   @IsPositive()
   @IsInt()
   id!: number;
