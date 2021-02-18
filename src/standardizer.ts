@@ -25,13 +25,6 @@ export function Standardized<T>(type?: Type<T>): Type<StandardResponse<T>> {
 }
 
 export function StandardizedList<T>(
-  type: Type<T>,
-): Type<StandardResponse<StandardList<T>>>;
-export function StandardizedList<T>(
-  type: string,
-  dtoName: string,
-): Type<StandardResponse<StandardList<T>>>;
-export function StandardizedList<T>(
   type: Type<T> | string,
   dtoName?: string,
 ): Type<StandardResponse<StandardList<T>>> {

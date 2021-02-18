@@ -24,11 +24,17 @@ export function ApiStandardResponse<T>(
 
 export function ApiStandardListResponse<T>(
   options: ApiResponseOptions & { type: Type<T> },
+): MethodDecorator;
+export function ApiStandardListResponse(
+  options: ApiResponseOptions & { type: string; dtoName: string },
+): MethodDecorator;
+export function ApiStandardListResponse<T>(
+  options: ApiResponseOptions & { type: Type<T> | string; dtoName?: string },
 ): MethodDecorator {
   return (...params): void => {
     ApiResponse({
       status: options.status ?? HttpStatus.OK,
-      type: StandardizedList(options.type),
+      type: StandardizedList(options.type, options.dtoName),
       description: options.description,
     })(...params);
   };
