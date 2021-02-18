@@ -1,6 +1,6 @@
 {
   "name": "nestjs-xion",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Excogitative integration of NestJS",
   "repository": "git@github.com:miZyind/nestjs-xion.git",
   "author": "miZyind <mizyind@gmail.com>",
