@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsNotEmpty,
@@ -22,6 +23,7 @@ export class StringIDParamDTO {
 }
 
 export class IntIDParamDTO {
+  @Type(() => Number)
   @IsPositive()
   @IsInt()
   @ApiProperty({ type: 'integer', minimum: 1 })
