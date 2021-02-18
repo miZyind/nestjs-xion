@@ -29,6 +29,7 @@
     "@nestjs/passport": "^7.1.5",
     "@nestjs/swagger": "^4.7.13",
     "@nestjsx/crud": "^4.6.2",
+    "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "rxjs": "^6.6.3"
   },
