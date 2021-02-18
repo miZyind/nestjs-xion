@@ -26,15 +26,23 @@ export function ApiStandardListResponse<T>(
   options: ApiResponseOptions & { type: Type<T> },
 ): MethodDecorator;
 export function ApiStandardListResponse(
-  options: ApiResponseOptions & { type: string; dtoName: string },
+  options: ApiResponseOptions & {
+    type: string;
+    dtoName: string;
+    example: unknown[];
+  },
 ): MethodDecorator;
 export function ApiStandardListResponse<T>(
-  options: ApiResponseOptions & { type: Type<T> | string; dtoName?: string },
+  options: ApiResponseOptions & {
+    type: Type<T> | string;
+    dtoName?: string;
+    example?: unknown[];
+  },
 ): MethodDecorator {
   return (...params): void => {
     ApiResponse({
       status: options.status ?? HttpStatus.OK,
-      type: StandardizedList(options.type, options.dtoName),
+      type: StandardizedList(options.type, options.dtoName, options.example),
       description: options.description,
     })(...params);
   };

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import { hasValue } from './guarder';
+
 import type { Type } from '@nestjs/common';
 import type { StandardList, StandardResponse } from './model';
 
@@ -11,7 +13,7 @@ export function Standardized<T>(type?: Type<T>): Type<StandardResponse<T>> {
     @ApiProperty({ example: 'Success' })
     message!: string;
 
-    @ApiProperty({ type, example: type ?? null })
+    @ApiProperty({ type, example: type ?? null, nullable: hasValue(type) })
     data!: D;
   }
 
@@ -27,11 +29,12 @@ export function Standardized<T>(type?: Type<T>): Type<StandardResponse<T>> {
 export function StandardizedList<T>(
   type: Type<T> | string,
   dtoName?: string,
+  example?: unknown[],
 ): Type<StandardResponse<StandardList<T>>> {
   const name = typeof type === 'string' ? dtoName : type.name;
 
   class EntityList<D> implements StandardList<D> {
-    @ApiProperty({ type, isArray: true })
+    @ApiProperty({ type, isArray: true, example })
     data!: D[];
 
     @ApiProperty({ example: 1 })
