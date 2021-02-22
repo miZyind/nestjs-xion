@@ -6,10 +6,7 @@ export interface StandardResponse<T> {
 
 export interface StandardList<T> {
   data: T[];
-  count?: number;
   total: number;
-  page?: number;
-  pageCount?: number;
 }
 
 // https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-attributes.html
