@@ -1,5 +1,5 @@
 import { readdirSync } from 'fs';
-import { join } from 'path';
+import { resolve } from 'path';
 
 import {
   ConfigModule as Config,
@@ -9,16 +9,18 @@ import {
 
 import type { DynamicModule } from '@nestjs/common';
 
+const ROOT_DIR = 'dist';
+
 export const ConfigModule = {
   forRoot: (dir = 'configs'): DynamicModule =>
     Config.forRoot({
       isGlobal: true,
-      load: readdirSync(join(__dirname, dir))
+      load: readdirSync(resolve(ROOT_DIR, dir))
         .filter((file) => !file.includes('index.js'))
         .map((file) =>
           registerAs(
             file.replace('.js', '').toUpperCase(),
-            () => import(join(__dirname, dir, file)),
+            () => import(resolve(ROOT_DIR, dir, file)),
           ),
         ),
     }),
