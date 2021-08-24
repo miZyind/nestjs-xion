@@ -52,7 +52,8 @@ type Result<T> = StandardResponse<StandardList<T> | T | null>;
 
 @Injectable()
 export class StandardResponseInterceptor<T>
-  implements NestInterceptor<T, Result<T>> {
+  implements NestInterceptor<T, Result<T>>
+{
   intercept(
     _: ExecutionContext,
     next: CallHandler<StandardList<T> | T | T[] | null>,
