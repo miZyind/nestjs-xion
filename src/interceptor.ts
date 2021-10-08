@@ -26,7 +26,6 @@ export class PaginationInterceptor extends CrudRequestInterceptor {
     super.intercept(context, next);
 
     const req = context.switchToHttp().getRequest<{
-      // eslint-disable-next-line @typescript-eslint/naming-convention -- NestJS' consistent key name
       NESTJSX_PARSED_CRUD_REQUEST_KEY?: CrudRequest;
     }>();
 
