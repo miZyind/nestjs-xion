@@ -6,8 +6,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      OUT_DIR: ${{ 'lib' }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -16,8 +14,8 @@ jobs:
           cache: 'yarn'
       - run: yarn
       - run: yarn build
-      - run: cp LICENSE package.json README.md $OUT_DIR
-      - run: cd $OUT_DIR && yarn semantic-release
+      - run: cp LICENSE package.json README.md lib
+      - run: yarn semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

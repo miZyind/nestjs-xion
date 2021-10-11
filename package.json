@@ -50,5 +50,15 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "release": {
+    "plugins": [
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "lib"
+        }
+      ]
+    ]
   }
 }
