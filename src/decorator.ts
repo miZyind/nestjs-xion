@@ -29,7 +29,7 @@ interface ApiCrudQueriesConfig {
 export function ApiCrudQueries(
   config: ApiCrudQueriesConfig = { search: true, limit: true, page: true },
 ) {
-  return function <T>(
+  return function Mixin<T>(
     target: object,
     key: string,
     descriptor: TypedPropertyDescriptor<T>,
