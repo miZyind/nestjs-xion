@@ -8,7 +8,12 @@ type SPrimitivesVal = boolean | number | string;
 
 type SFiledValues = SPrimitivesVal | SPrimitivesVal[];
 
-type SFieldOperator = Record<CondOperator, SFiledValues>;
+type SFieldOperator = Partial<Record<CondOperator, SFiledValues>>;
+
+interface SFieldCondition {
+  $and?: never;
+  $or?: SFieldCondition & SFieldOperator;
+}
 
 export interface QueryFilter {
   field: string;
@@ -16,7 +21,7 @@ export interface QueryFilter {
   value: string;
 }
 
-type SField = SFieldOperator | SPrimitivesVal;
+type SField = SPrimitivesVal | (SFieldCondition & SFieldOperator);
 
 interface SConditionAND {
   $and?: (SConditionAND | SFields)[];
@@ -31,7 +36,7 @@ interface SFields {
 
 export type SCondition = SConditionAND | SFields;
 
-export type SConditionKey = '$and' | '$or';
+export type SConditionKey = keyof SFieldCondition;
 
 export interface CRUDRequest {
   search: SCondition;

@@ -27,4 +27,5 @@ export enum CondOperator {
   ExcludesLow = '$exclL',
   InLow = '$inL',
   NotInLow = '$notinL',
+  JSONContains = '$jsoncont',
 }
