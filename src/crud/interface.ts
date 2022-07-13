@@ -39,10 +39,13 @@ export interface CRUDRequest {
   page: number;
 }
 
-export interface JoinOption {
-  alias?: string;
+export interface AllowedOptions {
   allow?: string[];
   exclude?: string[];
+}
+
+export interface JoinOption extends AllowedOptions {
+  alias?: string;
   required?: boolean;
 }
 

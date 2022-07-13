@@ -18,6 +18,7 @@ import type {
 } from 'typeorm';
 import type { StandardList } from '../model';
 import type {
+  AllowedOptions,
   CRUDOptions,
   CRUDRequest,
   JoinOption,
@@ -83,7 +84,9 @@ export class CRUDService<T> {
     req: CRUDRequest,
     options: CRUDOptions<T> = {},
   ): Promise<StandardList<T>> {
-    const builder = this.repo.createQueryBuilder(this.alias);
+    const builder = this.repo
+      .createQueryBuilder(this.alias)
+      .select(this.getSelect(options));
 
     this.setSearchCondition(builder, req.search);
 
@@ -101,7 +104,6 @@ export class CRUDService<T> {
     }
 
     const [data, total] = await builder
-      .select(this.getSelect(options))
       .take(req.limit)
       .skip((req.page - DEFAULT_CRUD_PAGE) * req.limit)
       .getManyAndCount();
@@ -501,7 +503,7 @@ export class CRUDService<T> {
 
   private getRelationMetadata(
     field: string,
-    options: JoinOption<T>,
+    options: JoinOption,
   ): Relation | null {
     try {
       let allowedRelation: Relation | null = null;
@@ -617,7 +619,7 @@ export class CRUDService<T> {
 
   private setJoin(
     field: string,
-    options: JoinOptions<T>,
+    options: JoinOptions,
     builder: SelectQueryBuilder<T>,
   ): void {
     const option = options[field];
@@ -664,21 +666,10 @@ export class CRUDService<T> {
   }
 
   private getSelect(options: CRUDOptions<T>): string[] {
-    const columns =
-      !hasValidValue(options.exclude) && !hasValidValue(options.allow)
-        ? this.entityColumns
-        : this.entityColumns.filter(
-            (column) =>
-              (hasValidValue(options.exclude)
-                ? !options.exclude.some((col) => col === column)
-                : true) &&
-              (hasValidValue(options.allow)
-                ? options.allow.some((col) => col === column)
-                : true),
-          );
-    const select = [...this.entityPrimaryColumns, ...columns].map(
-      (col) => `${this.alias}.${col}`,
-    );
+    const select = [
+      ...this.entityPrimaryColumns,
+      ...this.getAllowedColumns(this.entityColumns, options as AllowedOptions),
+    ].map((col) => `${this.alias}.${col}`);
 
     return [...new Set(select)];
   }
@@ -724,7 +715,7 @@ export class CRUDService<T> {
 
   private getAllowedColumns(
     columns: string[],
-    options: CRUDOptions<T>,
+    options: AllowedOptions,
   ): string[] {
     return !hasValidValue(options.exclude) && !hasValidValue(options.allow)
       ? columns
