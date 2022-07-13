@@ -10,10 +10,7 @@ import {
 
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-import {
-  DEFAULT_PAGINATION_LIMIT,
-  DEFAULT_PAGINATION_PAGE,
-} from './interceptor';
+import { DEFAULT_CRUD_LIMIT, DEFAULT_CRUD_PAGE } from './crud/constant';
 
 export class UUIDParamDTO {
   @IsUUID()
@@ -43,7 +40,7 @@ export class PaginationQueryDTO {
   @Type(() => Number)
   @ApiPropertyOptional({
     type: 'integer',
-    default: DEFAULT_PAGINATION_LIMIT,
+    default: DEFAULT_CRUD_LIMIT,
     minimum: 1,
     description:
       'Limit amount of resources<h5><a target="_blank" href="https://github.com/nestjsx/crud/wiki/Requests#limit">Documentation</a></h5><i>Minimum value: 1</i>',
@@ -56,8 +53,8 @@ export class PaginationQueryDTO {
   @Type(() => Number)
   @ApiPropertyOptional({
     type: 'integer',
-    default: DEFAULT_PAGINATION_PAGE,
-    minimum: DEFAULT_PAGINATION_PAGE,
+    default: DEFAULT_CRUD_PAGE,
+    minimum: DEFAULT_CRUD_PAGE,
     description:
       'Page portion of resources<h5><a target="_blank" href="https://github.com/nestjsx/crud/wiki/Requests#page">Documentation</a></h5><i>Minimum value: 1</i>',
   })
