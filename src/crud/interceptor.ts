@@ -7,7 +7,7 @@ import type {
   ExecutionContext,
   NestInterceptor,
 } from '@nestjs/common';
-import type { CRUDRequest } from './interface';
+import type { CRUDRequest, Request } from './interface';
 
 type QueryParam = string[] | string | undefined;
 
@@ -17,10 +17,9 @@ export class CRUDInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler,
   ): ReturnType<CallHandler['handle']> {
-    const req = context.switchToHttp().getRequest<{
-      query: Record<string, QueryParam>;
-      NESTJS_XION_CRUD_REQUEST?: CRUDRequest;
-    }>();
+    const req = context
+      .switchToHttp()
+      .getRequest<Request & { query: Record<string, QueryParam> }>();
 
     req.NESTJS_XION_CRUD_REQUEST = {
       search: { $and: [this.parseSearchQueryParam(req.query.s)] },

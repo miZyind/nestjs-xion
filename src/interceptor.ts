@@ -10,9 +10,6 @@ import type {
 } from '@nestjs/common';
 import type { StandardList, StandardResponse } from './model';
 
-export const DEFAULT_PAGINATION_LIMIT = 8;
-export const DEFAULT_PAGINATION_PAGE = 1;
-
 type Result<T> = StandardResponse<StandardList<T> | T | null>;
 
 @Injectable()

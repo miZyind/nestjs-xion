@@ -109,83 +109,6 @@ export class CRUDService<T> {
     return { data, total };
   }
 
-  protected setSearchFieldObjectCondition(
-    builder: SelectQueryBuilder<T>,
-    condition: SConditionKey,
-    field: string,
-    object: SCondition,
-  ): void {
-    const operators = Object.keys(object);
-
-    if (operators.length === MIN_COLUMN_CHAIN_LENGTH) {
-      const [operator] = operators;
-      const value = object[operator as SConditionKey];
-
-      if (typeof object.$or === 'object') {
-        const orKeys = Object.keys(object.$or);
-
-        this.setSearchFieldObjectCondition(
-          builder,
-          orKeys.length === MIN_COLUMN_CHAIN_LENGTH ? condition : '$or',
-          field,
-          object.$or as SCondition,
-        );
-      } else {
-        this.builderSetWhere(
-          builder,
-          condition,
-          field,
-          value,
-          operator as CondOperator,
-        );
-      }
-    } else if (operators.length > MIN_COLUMN_CHAIN_LENGTH) {
-      this.builderAddBrackets(
-        builder,
-        condition,
-        new Brackets((qb) => {
-          operators.forEach((operator) => {
-            const value = object[operator as SConditionKey];
-
-            if (operator === '$or') {
-              const orKeys = Object.keys(object.$or as SCondition[]);
-
-              if (orKeys.length === MIN_COLUMN_CHAIN_LENGTH) {
-                this.setSearchFieldObjectCondition(
-                  qb as SelectQueryBuilder<T>,
-                  condition,
-                  field,
-                  object.$or as SCondition,
-                );
-              } else {
-                this.builderAddBrackets(
-                  qb as SelectQueryBuilder<T>,
-                  condition,
-                  new Brackets((qb2) => {
-                    this.setSearchFieldObjectCondition(
-                      qb2 as SelectQueryBuilder<T>,
-                      '$or',
-                      field,
-                      object.$or as SCondition,
-                    );
-                  }),
-                );
-              }
-            } else {
-              this.builderSetWhere(
-                qb as SelectQueryBuilder<T>,
-                condition,
-                field,
-                value,
-                operator as CondOperator,
-              );
-            }
-          });
-        }),
-      );
-    }
-  }
-
   // eslint-disable-next-line complexity -- Necessary for operators
   protected mapOperatorsToQuery(
     cond: QueryFilter,
@@ -293,6 +216,83 @@ export class CRUDService<T> {
     }
 
     return { str, params };
+  }
+
+  private setSearchFieldObjectCondition(
+    builder: SelectQueryBuilder<T>,
+    condition: SConditionKey,
+    field: string,
+    object: SCondition,
+  ): void {
+    const operators = Object.keys(object);
+
+    if (operators.length === MIN_COLUMN_CHAIN_LENGTH) {
+      const [operator] = operators;
+      const value = object[operator as SConditionKey];
+
+      if (typeof object.$or === 'object') {
+        const orKeys = Object.keys(object.$or);
+
+        this.setSearchFieldObjectCondition(
+          builder,
+          orKeys.length === MIN_COLUMN_CHAIN_LENGTH ? condition : '$or',
+          field,
+          object.$or as SCondition,
+        );
+      } else {
+        this.builderSetWhere(
+          builder,
+          condition,
+          field,
+          value,
+          operator as CondOperator,
+        );
+      }
+    } else if (operators.length > MIN_COLUMN_CHAIN_LENGTH) {
+      this.builderAddBrackets(
+        builder,
+        condition,
+        new Brackets((qb) => {
+          operators.forEach((operator) => {
+            const value = object[operator as SConditionKey];
+
+            if (operator === '$or') {
+              const orKeys = Object.keys(object.$or as SCondition[]);
+
+              if (orKeys.length === MIN_COLUMN_CHAIN_LENGTH) {
+                this.setSearchFieldObjectCondition(
+                  qb as SelectQueryBuilder<T>,
+                  condition,
+                  field,
+                  object.$or as SCondition,
+                );
+              } else {
+                this.builderAddBrackets(
+                  qb as SelectQueryBuilder<T>,
+                  condition,
+                  new Brackets((qb2) => {
+                    this.setSearchFieldObjectCondition(
+                      qb2 as SelectQueryBuilder<T>,
+                      '$or',
+                      field,
+                      object.$or as SCondition,
+                    );
+                  }),
+                );
+              }
+            } else {
+              this.builderSetWhere(
+                qb as SelectQueryBuilder<T>,
+                condition,
+                field,
+                value,
+                operator as CondOperator,
+              );
+            }
+          });
+        }),
+      );
+    }
   }
 
   private builderSetWhere(

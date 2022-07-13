@@ -1,5 +1,9 @@
 import type { CondOperator } from './constant';
 
+export interface Request {
+  NESTJS_XION_CRUD_REQUEST?: CRUDRequest;
+}
+
 type SPrimitivesVal = boolean | number | string;
 
 type SFiledValues = SPrimitivesVal | SPrimitivesVal[];

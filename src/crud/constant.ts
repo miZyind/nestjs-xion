@@ -2,6 +2,7 @@ export const DEFAULT_CRUD_LIMIT = 8;
 export const DEFAULT_CRUD_PAGE = 1;
 export const MIN_COLUMN_CHAIN_LENGTH = 1;
 export const MAX_COLUMN_CHAIN_LENGTH = 2;
+export const NESTJS_XION_CRUD_REQUEST = 'NESTJS_XION_CRUD_REQUEST';
 export enum CondOperator {
   Equals = '$eq',
   NotEquals = '$ne',
