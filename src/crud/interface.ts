@@ -39,14 +39,14 @@ export interface CRUDRequest {
   page: number;
 }
 
-export interface JoinOption<T> {
+export interface JoinOption {
   alias?: string;
-  allow?: (keyof T)[];
-  exclude?: (keyof T)[];
+  allow?: string[];
+  exclude?: string[];
   required?: boolean;
 }
 
-export type JoinOptions<T> = Record<string, JoinOption<T>>;
+export type JoinOptions = Record<string, JoinOption>;
 
 export interface QuerySort<T> {
   field: keyof T;
@@ -56,6 +56,6 @@ export interface QuerySort<T> {
 export interface CRUDOptions<T> {
   allow?: (keyof T)[];
   exclude?: (keyof T)[];
-  join?: JoinOptions<T>;
+  join?: JoinOptions;
   sort?: QuerySort<T>[];
 }
