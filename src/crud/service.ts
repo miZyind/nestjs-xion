@@ -631,6 +631,16 @@ export class CRUDService<T> {
       allowedRelation.path,
       hasValidValue(option.alias) ? option.alias : allowedRelation.name,
     );
+
+    const alias = hasValidValue(option.alias)
+      ? option.alias
+      : allowedRelation.name;
+    const select = [
+      ...allowedRelation.primaryColumns,
+      ...allowedRelation.allowedColumns,
+    ].map((col) => `${alias}.${col}`);
+
+    builder.addSelect([...new Set(select)]);
   }
 
   private setAndWhere(
@@ -666,10 +676,11 @@ export class CRUDService<T> {
                 ? options.allow.some((col) => col === column)
                 : true),
           );
-
-    return [...columns, ...this.entityPrimaryColumns].map(
+    const select = [...this.entityPrimaryColumns, ...columns].map(
       (col) => `${this.alias}.${col}`,
     );
+
+    return [...new Set(select)];
   }
 
   private getFieldWithAlias(field: string, sort = false): string {

@@ -3,6 +3,7 @@ export {
   DEFAULT_CRUD_LIMIT,
   DEFAULT_CRUD_PAGE,
 } from './constant';
-export type { CRUDRequest, QueryFilter } from './interface';
+export { ParsedRequest } from './decorator';
 export { CRUDInterceptor } from './interceptor';
+export type { CRUDRequest, QueryFilter } from './interface';
 export { CRUDService } from './service';
