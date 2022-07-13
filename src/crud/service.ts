@@ -81,7 +81,7 @@ export class CRUDService<T> {
 
   async getMany(
     req: CRUDRequest,
-    options: CRUDOptions<T>,
+    options: CRUDOptions<T> = {},
   ): Promise<StandardList<T>> {
     const builder = this.repo.createQueryBuilder(this.alias);
 
