@@ -25,16 +25,14 @@
     "class-validator": "^0.13.2",
     "passport": "^0.6.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.5.6"
+    "rxjs": "^7.5.6",
+    "typeorm": "^0.3.7"
   },
   "devDependencies": {
     "@types/node": "^18.0.3",
     "eslint-plugin-mizyind": "^4.6.0",
     "semantic-release": "^19.0.3",
     "typescript": "^4.7.4"
-  },
-  "peerDependencies": {
-    "typeorm": "^0.3.7"
   },
   "keywords": [
     "nestjs",
