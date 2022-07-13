@@ -11,7 +11,7 @@ export function Standardized<T>(type?: Type<T>): Type<StandardResponse<T>> {
     @ApiProperty({ example: 'Success' })
     message!: string;
 
-    @ApiProperty({ type: type ?? 'null', example: type ?? null })
+    @ApiProperty(type ? { type } : { example: null })
     data!: D;
   }
 
