@@ -2,18 +2,12 @@ import { createParamDecorator } from '@nestjs/common';
 
 import { NESTJS_XION_CRUD_REQUEST } from './constant';
 
-import type { ArgumentsHost } from '@nestjs/common';
+import type { ExecutionContext } from '@nestjs/common';
 import type { Request } from './interface';
 
-function getContextRequest(ctx: ArgumentsHost): unknown {
-  return typeof ctx.switchToHttp() === 'function'
-    ? ctx.switchToHttp().getRequest()
-    : ctx;
+export function ParsedRequest(): ParameterDecorator {
+  return createParamDecorator(
+    (_, ctx: ExecutionContext) =>
+      ctx.switchToHttp().getRequest<Request>()[NESTJS_XION_CRUD_REQUEST],
+  )();
 }
-
-export const ParsedRequest = createParamDecorator(
-  (_, ctx: ArgumentsHost): ParameterDecorator =>
-    (getContextRequest(ctx) as Request)[
-      NESTJS_XION_CRUD_REQUEST
-    ] as unknown as ParameterDecorator,
-);
