@@ -28,6 +28,6 @@ export function customOptions(appName: string): SwaggerCustomOptions {
         height: 18px;
       }
     `,
-    customSiteTitle: `${appName} API`,
+    customSiteTitle: `${appName} APIs`,
   };
 }
