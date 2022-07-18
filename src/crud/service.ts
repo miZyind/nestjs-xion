@@ -50,13 +50,13 @@ export class CRUDService<T> {
 
   protected entityRelationsHash: Map<string, Relation> = new Map();
 
-  protected sqlInjectionRegEx: RegExp[] = [
-    /* eslint-disable prefer-named-capture-group, require-unicode-regexp, no-useless-escape */
-    /(%27)|(\')|(--)|(%23)|(#)/gi,
-    /((%3D)|(=))[^\n]*((%27)|(\')|(--)|(%3B)|(;))/gi,
-    /w*((%27)|(\'))((%6F)|o|(%4F))((%72)|r|(%52))/gi,
-    /((%27)|(\'))union/gi,
-    /* eslint-enable prefer-named-capture-group, require-unicode-regexp, no-useless-escape */
+  private readonly sqlInjectionRegEx: RegExp[] = [
+    /* eslint-disable prefer-named-capture-group -- Unnecessary here */
+    /(%27)|(')|(--)|(%23)|(#)/giu,
+    /((%3D)|(=))[^\n]*((%27)|(')|(--)|(%3B)|(;))/giu,
+    /w*((%27)|('))((%6F)|o|(%4F))((%72)|r|(%52))/giu,
+    /((%27)|('))union/giu,
+    /* eslint-enable prefer-named-capture-group */
   ];
 
   constructor(protected repo: Repository<T>) {
@@ -67,6 +67,11 @@ export class CRUDService<T> {
 
         return prop.propertyPath;
       }
+
+      if (prop.referencedColumn) {
+        this.entityColumnsHash[prop.databaseName] = prop.databaseName;
+      }
+
       this.entityColumnsHash[prop.propertyName] = prop.databasePath;
 
       return prop.propertyName;
@@ -193,22 +198,17 @@ export class CRUDService<T> {
     operator = CondOperator.Equals,
   ): void {
     const [first, second] = process.hrtime();
-    const index = `${field}${first}${second}`;
     const args = [
       {
         field,
         operator: value === null ? CondOperator.IsNull : operator,
         value: value as string,
       },
-      index,
+      `${field}${first}${second}`,
       builder,
     ] as const;
 
-    if (condition === '$and') {
-      this.setAndWhere(...args);
-    } else {
-      this.setOrWhere(...args);
-    }
+    this[condition === '$and' ? 'setAndWhere' : 'setOrWhere'](...args);
   }
 
   private builderAddBrackets(
@@ -216,11 +216,7 @@ export class CRUDService<T> {
     condition: SConditionKey,
     brackets: Brackets,
   ): void {
-    if (condition === '$and') {
-      builder.andWhere(brackets);
-    } else {
-      builder.orWhere(brackets);
-    }
+    builder[condition === '$and' ? 'andWhere' : 'orWhere'](brackets);
   }
 
   private setSearchCondition(
@@ -458,17 +454,14 @@ export class CRUDService<T> {
           const { columns, primaryColumns } =
             this.getEntityColumns(relationMetadata);
 
-          if (!path && parentPath) {
-            // eslint-disable-next-line max-depth
-            if (this.entityRelationsHash.has(parentPath)) {
-              const parentAllowedRelation = this.entityRelationsHash.get(
-                parentPath,
-              ) as Relation;
+          if (!path && parentPath && this.entityRelationsHash.has(parentPath)) {
+            const parentAllowedRelation = this.entityRelationsHash.get(
+              parentPath,
+            ) as Relation;
 
-              path = hasValidValue(parentAllowedRelation.alias)
-                ? `${parentAllowedRelation.alias}.${name}`
-                : field;
-            }
+            path = hasValidValue(parentAllowedRelation.alias)
+              ? `${parentAllowedRelation.alias}.${name}`
+              : field;
           }
 
           allowedRelation = {

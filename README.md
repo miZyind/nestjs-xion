@@ -13,8 +13,8 @@ XION, short for **eXcogitative Integration Of NestJS**.
 ## 🌌 Techniques
 
 - **[NestJS](https://nestjs.com)** - A progressive NodeJS framework for building efficient, reliable and scalable server-side applications.
+  - **[@nestjs/passport](https://github.com/nestjs/passport)** - Passport module for Nest.
   - **[@nestjs/swagger](https://github.com/nestjs/swagger)** - OpenAPI (Swagger) module for Nest.
-  - **[@nestjs/passport](https://github.com/nestjs/passport)** - .Passport module for Nest.
 - **[Swagger](https://swagger.io)** - API Documentation & Design Tools for Teams.
 - **[RxJS](https://rxjs.dev)** - A reactive programming library for JS.
 - **[Class Validator](https://github.com/typestack/class-validator)** - Decorator-based property validation for classes.
