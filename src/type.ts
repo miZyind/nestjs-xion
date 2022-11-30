@@ -1,1 +1,2 @@
-export type ObjectLiteral<T = string> = Record<keyof T, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface -- Necessary for ObjectLiteral
+export interface ObjectLiteral {}
