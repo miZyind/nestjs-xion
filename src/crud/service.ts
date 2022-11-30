@@ -17,6 +17,7 @@ import type {
   SelectQueryBuilder,
 } from 'typeorm';
 import type { StandardList } from '../model';
+import type { ObjectLiteral } from '../type';
 import type {
   AllowedOptions,
   CRUDOptions,
@@ -39,7 +40,7 @@ interface Relation {
   allowedColumns: string[];
 }
 
-export class CRUDService<T> {
+export class CRUDService<T extends ObjectLiteral> {
   protected dbName: DataSourceOptions['type'];
 
   protected entityPrimaryColumns: string[] = [];
@@ -48,7 +49,7 @@ export class CRUDService<T> {
 
   protected entityColumnsHash: Record<string, string> = {};
 
-  protected entityRelationsHash: Map<string, Relation> = new Map();
+  protected entityRelationsHash = new Map<string, Relation>();
 
   private readonly sqlInjectionRegEx: RegExp[] = [
     /* eslint-disable prefer-named-capture-group -- Unnecessary here */
