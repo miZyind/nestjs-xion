@@ -21,14 +21,14 @@ export interface QueryFilter {
   value: string;
 }
 
-type SField = SPrimitivesVal | (SFieldCondition & SFieldOperator);
+export type SField = SPrimitivesVal | (SFieldCondition & SFieldOperator);
 
-interface SConditionAND {
+export interface SConditionAND {
   $and?: (SConditionAND | SFields)[];
   $or?: never;
 }
 
-interface SFields {
+export interface SFields {
   [key: string]: (SConditionAND | SFields)[] | SField | undefined;
   $or?: (SConditionAND | SFields)[];
   $and?: never;
