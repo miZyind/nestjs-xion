@@ -114,6 +114,119 @@ export class CRUDService<T extends ObjectLiteral> {
     return { data, total };
   }
 
+  // eslint-disable-next-line complexity -- Necessary for operators handling
+  protected mapOperatorsToQuery(
+    cond: QueryFilter,
+    param: string,
+  ): { str: string; params: Record<string, unknown> } {
+    const field = this.getFieldWithAlias(cond.field);
+    const likeOperator = this.dbName === 'postgres' ? 'ILIKE' : 'LIKE';
+    let str = `${field} = :${param}`;
+    let params: Record<string, unknown> | null = null;
+
+    switch (cond.operator) {
+      case CondOperator.Equals:
+        str = `${field} = :${param}`;
+        break;
+      case CondOperator.NotEquals:
+        str = `${field} != :${param}`;
+        break;
+      case CondOperator.GreaterThan:
+        str = `${field} > :${param}`;
+        break;
+      case CondOperator.LowerThan:
+        str = `${field} < :${param}`;
+        break;
+      case CondOperator.GreaterThanEquals:
+        str = `${field} >= :${param}`;
+        break;
+      case CondOperator.LowerThanEquals:
+        str = `${field} <= :${param}`;
+        break;
+      case CondOperator.Starts:
+        str = `${field} LIKE :${param}`;
+        params = { [param]: `${cond.value}%` };
+        break;
+      case CondOperator.Ends:
+        str = `${field} LIKE :${param}`;
+        params = { [param]: `%${cond.value}` };
+        break;
+      case CondOperator.Contains:
+        str = `${field} LIKE :${param}`;
+        params = { [param]: `%${cond.value}%` };
+        break;
+      case CondOperator.Excludes:
+        str = `${field} NOT LIKE :${param}`;
+        params = { [param]: `%${cond.value}%` };
+        break;
+      case CondOperator.In:
+        str = `${field} IN (:...${param})`;
+        break;
+      case CondOperator.NotIn:
+        str = `${field} NOT IN (:...${param})`;
+        break;
+      case CondOperator.IsNull:
+        str = `${field} IS NULL`;
+        params = {};
+        break;
+      case CondOperator.NotNull:
+        str = `${field} IS NOT NULL`;
+        params = {};
+        break;
+      case CondOperator.Between: {
+        const [first, second] = cond.value;
+
+        str = `${field} BETWEEN :${param}0 AND :${param}1`;
+        params = {
+          [`${param}0`]: first,
+          [`${param}1`]: second,
+        };
+        break;
+      }
+      case CondOperator.EqualsLow:
+        str = `LOWER(${field}) = :${param}`;
+        break;
+      case CondOperator.NotEqualsLow:
+        str = `LOWER(${field}) != :${param}`;
+        break;
+      case CondOperator.StartsLow:
+        str = `LOWER(${field}) ${likeOperator} :${param}`;
+        params = { [param]: `${cond.value}%` };
+        break;
+      case CondOperator.EndsLow:
+        str = `LOWER(${field}) ${likeOperator} :${param}`;
+        params = { [param]: `%${cond.value}` };
+        break;
+      case CondOperator.ContainsLow:
+        str = `LOWER(${field}) ${likeOperator} :${param}`;
+        params = { [param]: `%${cond.value}%` };
+        break;
+      case CondOperator.ExcludesLow:
+        str = `LOWER(${field}) NOT ${likeOperator} :${param}`;
+        params = { [param]: `%${cond.value}%` };
+        break;
+      case CondOperator.InLow:
+        str = `LOWER(${field}) IN (:...${param})`;
+        break;
+      case CondOperator.NotInLow:
+        str = `LOWER(${field}) NOT IN (:...${param})`;
+        break;
+      case CondOperator.JSONContains:
+        str = `JSON_CONTAINS(${field}, :${param})`;
+        params = { [param]: JSON.stringify(cond.value) };
+        break;
+      default:
+        str = `${field} = :${param}`;
+        break;
+    }
+
+    if (params === null) {
+      params = { [param]: cond.value };
+    }
+
+    return { str, params };
+  }
+
   private setSearchFieldObjectCondition(
     builder: SelectQueryBuilder<T>,
     condition: SConditionKey,
@@ -525,119 +638,6 @@ export class CRUDService<T extends ObjectLiteral> {
     ].map((col) => `${alias}.${col}`);
 
     builder.addSelect([...new Set(select)]);
-  }
-
-  // eslint-disable-next-line complexity -- Necessary for operators handling
-  private mapOperatorsToQuery(
-    cond: QueryFilter,
-    param: string,
-  ): { str: string; params: Record<string, unknown> } {
-    const field = this.getFieldWithAlias(cond.field);
-    const likeOperator = this.dbName === 'postgres' ? 'ILIKE' : 'LIKE';
-    let str = `${field} = :${param}`;
-    let params: Record<string, unknown> | null = null;
-
-    switch (cond.operator) {
-      case CondOperator.Equals:
-        str = `${field} = :${param}`;
-        break;
-      case CondOperator.NotEquals:
-        str = `${field} != :${param}`;
-        break;
-      case CondOperator.GreaterThan:
-        str = `${field} > :${param}`;
-        break;
-      case CondOperator.LowerThan:
-        str = `${field} < :${param}`;
-        break;
-      case CondOperator.GreaterThanEquals:
-        str = `${field} >= :${param}`;
-        break;
-      case CondOperator.LowerThanEquals:
-        str = `${field} <= :${param}`;
-        break;
-      case CondOperator.Starts:
-        str = `${field} LIKE :${param}`;
-        params = { [param]: `${cond.value}%` };
-        break;
-      case CondOperator.Ends:
-        str = `${field} LIKE :${param}`;
-        params = { [param]: `%${cond.value}` };
-        break;
-      case CondOperator.Contains:
-        str = `${field} LIKE :${param}`;
-        params = { [param]: `%${cond.value}%` };
-        break;
-      case CondOperator.Excludes:
-        str = `${field} NOT LIKE :${param}`;
-        params = { [param]: `%${cond.value}%` };
-        break;
-      case CondOperator.In:
-        str = `${field} IN (:...${param})`;
-        break;
-      case CondOperator.NotIn:
-        str = `${field} NOT IN (:...${param})`;
-        break;
-      case CondOperator.IsNull:
-        str = `${field} IS NULL`;
-        params = {};
-        break;
-      case CondOperator.NotNull:
-        str = `${field} IS NOT NULL`;
-        params = {};
-        break;
-      case CondOperator.Between: {
-        const [first, second] = cond.value;
-
-        str = `${field} BETWEEN :${param}0 AND :${param}1`;
-        params = {
-          [`${param}0`]: first,
-          [`${param}1`]: second,
-        };
-        break;
-      }
-      case CondOperator.EqualsLow:
-        str = `LOWER(${field}) = :${param}`;
-        break;
-      case CondOperator.NotEqualsLow:
-        str = `LOWER(${field}) != :${param}`;
-        break;
-      case CondOperator.StartsLow:
-        str = `LOWER(${field}) ${likeOperator} :${param}`;
-        params = { [param]: `${cond.value}%` };
-        break;
-      case CondOperator.EndsLow:
-        str = `LOWER(${field}) ${likeOperator} :${param}`;
-        params = { [param]: `%${cond.value}` };
-        break;
-      case CondOperator.ContainsLow:
-        str = `LOWER(${field}) ${likeOperator} :${param}`;
-        params = { [param]: `%${cond.value}%` };
-        break;
-      case CondOperator.ExcludesLow:
-        str = `LOWER(${field}) NOT ${likeOperator} :${param}`;
-        params = { [param]: `%${cond.value}%` };
-        break;
-      case CondOperator.InLow:
-        str = `LOWER(${field}) IN (:...${param})`;
-        break;
-      case CondOperator.NotInLow:
-        str = `LOWER(${field}) NOT IN (:...${param})`;
-        break;
-      case CondOperator.JSONContains:
-        str = `JSON_CONTAINS(${field}, :${param})`;
-        params = { [param]: JSON.stringify(cond.value) };
-        break;
-      default:
-        str = `${field} = :${param}`;
-        break;
-    }
-
-    if (params === null) {
-      params = { [param]: cond.value };
-    }
-
-    return { str, params };
   }
 
   private setAndWhere(
