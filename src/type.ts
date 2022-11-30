@@ -1,1 +1,1 @@
-export type ObjectLiteral = Record<string, unknown>;
+export type ObjectLiteral<T = string> = Record<keyof T, unknown>;

@@ -40,7 +40,7 @@ interface Relation {
   allowedColumns: string[];
 }
 
-export class CRUDService<T extends ObjectLiteral> {
+export class CRUDService<T extends ObjectLiteral<T>> {
   protected dbName: DataSourceOptions['type'];
 
   protected entityPrimaryColumns: string[] = [];
