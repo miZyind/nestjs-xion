@@ -5,5 +5,5 @@ export {
 } from './constant';
 export { ParsedRequest } from './decorator';
 export { CRUDInterceptor } from './interceptor';
-export type { CRUDRequest } from './interface';
+export type { CRUDRequest, QueryFilter } from './interface';
 export { CRUDService } from './service';
