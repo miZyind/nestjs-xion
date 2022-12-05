@@ -13,6 +13,7 @@ import {
 import type {
   DataSourceOptions,
   EntityMetadata,
+  FindOneOptions,
   Repository,
   SelectQueryBuilder,
 } from 'typeorm';
@@ -82,8 +83,33 @@ export class CRUDService<T extends ObjectLiteral> {
       .map((prop) => prop.propertyName);
   }
 
+  get find(): Repository<T>['find'] {
+    return this.repo.find.bind(this.repo);
+  }
+
+  get findOne(): Repository<T>['findOne'] {
+    return this.repo.findOne.bind(this.repo);
+  }
+
+  get count(): Repository<T>['count'] {
+    return this.repo.count.bind(this.repo);
+  }
+
   private get alias(): string {
     return this.repo.metadata.targetName;
+  }
+
+  async findOneOrError(
+    options: FindOneOptions<T>,
+    message: string,
+  ): Promise<T> {
+    const entity = await this.repo.findOne(options);
+
+    if (entity) {
+      return entity;
+    }
+
+    throw new BadRequestException(message);
   }
 
   async getMany(
