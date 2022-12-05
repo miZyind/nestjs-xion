@@ -231,8 +231,14 @@ export class CRUDService<T extends ObjectLiteral> {
     builder: SelectQueryBuilder<T>,
     condition: SConditionKey,
     field: string,
-    object: SCondition,
+    object: SCondition | null,
   ): void {
+    if (object === null) {
+      this.builderSetWhere(builder, condition, field, null);
+
+      return;
+    }
+
     const operators = Object.keys(object);
 
     if (operators.length === MIN_COLUMN_CHAIN_LENGTH) {
