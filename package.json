@@ -8,7 +8,7 @@
   "homepage": "https://github.com/miZyind/nestjs-xion#readme",
   "bugs": "https://github.com/miZyind/nestjs-xion/issues",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "build": "tsc",
