@@ -120,6 +120,8 @@ export class CRUDService<T extends ObjectLiteral> {
       .createQueryBuilder(this.alias)
       .select(this.getSelect(options));
 
+    req.search.$and = req.search.$and?.filter((o) => Object.keys(o).length);
+    req.search.$or = req.search.$or?.filter((o) => Object.keys(o).length);
     this.setSearchCondition(builder, req.search);
 
     if (hasValue(options.join)) {
