@@ -8,6 +8,7 @@ import {
   DEFAULT_CRUD_PAGE,
   MAX_COLUMN_CHAIN_LENGTH,
   MIN_COLUMN_CHAIN_LENGTH,
+  MIN_QUERY_BUILDER_CONDITION_LENGTH,
 } from './constant';
 
 import type {
@@ -120,8 +121,20 @@ export class CRUDService<T extends ObjectLiteral> {
       .createQueryBuilder(this.alias)
       .select(this.getSelect(options));
 
-    req.search.$and = req.search.$and?.filter((o) => Object.keys(o).length);
-    req.search.$or = req.search.$or?.filter((o) => Object.keys(o).length);
+    if (
+      hasValue(req.search.$and) &&
+      req.search.$and.length > MIN_QUERY_BUILDER_CONDITION_LENGTH
+    ) {
+      req.search.$and = req.search.$and.filter((o) => Object.keys(o).length);
+    }
+
+    if (
+      hasValue(req.search.$or) &&
+      req.search.$or.length > MIN_QUERY_BUILDER_CONDITION_LENGTH
+    ) {
+      req.search.$or = req.search.$or.filter((o) => Object.keys(o).length);
+    }
+
     this.setSearchCondition(builder, req.search);
 
     if (hasValue(options.join)) {
