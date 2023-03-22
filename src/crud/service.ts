@@ -7,6 +7,7 @@ import {
   CondOperator,
   DEFAULT_CRUD_PAGE,
   MAX_COLUMN_CHAIN_LENGTH,
+  MAX_CRUD_LIMIT,
   MIN_COLUMN_CHAIN_LENGTH,
   MIN_QUERY_BUILDER_CONDITION_LENGTH,
 } from './constant';
@@ -120,6 +121,7 @@ export class CRUDService<T extends ObjectLiteral> {
     const builder = this.repo
       .createQueryBuilder(this.alias)
       .select(this.getSelect(options));
+    const limit = req.limit > MAX_CRUD_LIMIT ? MAX_CRUD_LIMIT : req.limit;
 
     if (
       hasValue(req.search.$and) &&
@@ -148,8 +150,8 @@ export class CRUDService<T extends ObjectLiteral> {
     }
 
     const [data, total] = await builder
-      .take(req.limit)
-      .skip((req.page - DEFAULT_CRUD_PAGE) * req.limit)
+      .take(limit)
+      .skip((req.page - DEFAULT_CRUD_PAGE) * limit)
       .getManyAndCount();
 
     return { data, total };

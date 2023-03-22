@@ -1,4 +1,5 @@
 export const DEFAULT_CRUD_LIMIT = 8;
+export const MAX_CRUD_LIMIT = 100;
 export const DEFAULT_CRUD_PAGE = 1;
 export const MIN_COLUMN_CHAIN_LENGTH = 1;
 export const MAX_COLUMN_CHAIN_LENGTH = 2;
