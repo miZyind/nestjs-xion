@@ -16,22 +16,22 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "@nestjs/common": "^9.4.0",
-    "@nestjs/config": "^2.3.1",
-    "@nestjs/core": "^9.4.0",
+    "@nestjs/common": "^9.4.1",
+    "@nestjs/config": "^2.3.2",
+    "@nestjs/core": "^9.4.1",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/swagger": "^6.3.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "passport": "^0.6.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0",
-    "typeorm": "^0.3.15"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.16"
   },
   "devDependencies": {
-    "@types/node": "^18.16.0",
-    "eslint-plugin-mizyind": "^4.10.0",
-    "semantic-release": "^21.0.1",
+    "@types/node": "^20.2.3",
+    "eslint-plugin-mizyind": "^4.11.0",
+    "semantic-release": "^21.0.2",
     "typescript": "^5.0.4"
   },
   "keywords": [
