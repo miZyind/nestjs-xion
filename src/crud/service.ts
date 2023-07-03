@@ -258,6 +258,13 @@ export class CRUDService<T extends ObjectLiteral> {
         str = `JSON_CONTAINS(${field}, :${param})`;
         params = { [param]: JSON.stringify(cond.value) };
         break;
+      case CondOperator.JSONEquals: {
+        const [target] = cond.field.split(' ->');
+
+        str = `${cond.field} = :${target}`;
+        params = { [target]: cond.value };
+        break;
+      }
       default:
         str = `${field} = :${param}`;
         break;

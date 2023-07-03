@@ -30,4 +30,5 @@ export enum CondOperator {
   InLow = '$inL',
   NotInLow = '$notinL',
   JSONContains = '$jsoncont',
+  JSONEquals = '$jsoneq',
 }
