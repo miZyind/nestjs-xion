@@ -3,6 +3,7 @@ import type { SwaggerCustomOptions } from '@nestjs/swagger';
 export function customOptions(appName: string): SwaggerCustomOptions {
   return {
     swaggerOptions: {
+      persistAuthorization: true,
       defaultModelExpandDepth: 10,
       defaultModelsExpandDepth: -1,
     },
