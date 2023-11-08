@@ -93,8 +93,8 @@ export class CRUDService<T extends ObjectLiteral> {
     return this.repo.findOne.bind(this.repo);
   }
 
-  get count(): Repository<T>['count'] {
-    return this.repo.count.bind(this.repo);
+  get count(): Repository<T>['countBy'] {
+    return this.repo.countBy.bind(this.repo);
   }
 
   private get alias(): string {
