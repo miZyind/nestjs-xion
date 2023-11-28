@@ -1,7 +1,6 @@
 import { Brackets } from 'typeorm';
 
-import { BadRequestException } from '@nestjs/common';
-
+import { RequestError } from '../error';
 import { hasValidValue, hasValue } from '../guarder';
 import {
   CondOperator,
@@ -101,6 +100,10 @@ export class CRUDService<T extends ObjectLiteral> {
     return this.repo.metadata.targetName;
   }
 
+  query(alias?: string): SelectQueryBuilder<T> {
+    return this.repo.createQueryBuilder(alias);
+  }
+
   async findOneOrError(
     options: FindOneOptions<T>,
     message: string,
@@ -111,7 +114,7 @@ export class CRUDService<T extends ObjectLiteral> {
       return entity;
     }
 
-    throw new BadRequestException(message);
+    throw new RequestError(message);
   }
 
   async getMany(
@@ -784,7 +787,7 @@ export class CRUDService<T extends ObjectLiteral> {
   private checkSqlInjection(field: string): string {
     for (const regex of this.sqlInjectionRegEx) {
       if (regex.test(field)) {
-        throw new BadRequestException(`SQL injection detected: "${field}"`);
+        throw new Error(`SQL injection detected: "${field}"`);
       }
     }
 

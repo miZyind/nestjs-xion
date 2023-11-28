@@ -1,5 +1,6 @@
 export interface StandardResponse<T> {
   code: number;
+  error?: string;
   message: string;
   data: T;
 }
