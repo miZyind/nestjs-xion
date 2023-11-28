@@ -1,4 +1,4 @@
-import * as changeCase from 'change-case';
+import { constantCase } from 'case-anything';
 
 import { Catch, HttpException, Logger } from '@nestjs/common';
 
@@ -17,10 +17,7 @@ enum HttpStatus {
 
 export class RequestError extends HttpException {
   constructor(message: string) {
-    super(
-      { error: changeCase.constantCase(message), message },
-      HttpStatus.RequestError,
-    );
+    super({ error: constantCase(message), message }, HttpStatus.RequestError);
   }
 }
 export class AuthorizationError extends HttpException {
@@ -79,7 +76,7 @@ export class ErrorFilter implements ExceptionFilter {
             body.error =
               error instanceof RequestError
                 ? source.error
-                : changeCase.constantCase(source.message);
+                : constantCase(source.message);
             body.message = source.message;
           }
           break;
