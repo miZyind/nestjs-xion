@@ -1,6 +1,6 @@
 import type { SwaggerCustomOptions } from '@nestjs/swagger';
 
-export function customOptions(appName: string): SwaggerCustomOptions {
+export function customOptions(customSiteTitle: string): SwaggerCustomOptions {
   return {
     swaggerOptions: {
       persistAuthorization: true,
@@ -29,6 +29,6 @@ export function customOptions(appName: string): SwaggerCustomOptions {
         height: 18px;
       }
     `,
-    customSiteTitle: `${appName} APIs`,
+    customSiteTitle,
   };
 }
