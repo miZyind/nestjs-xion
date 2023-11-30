@@ -26,7 +26,7 @@ export const ConfigModule = {
     }),
 };
 
-export class ConfService extends BaseConfigService {
+export class ConfigService extends BaseConfigService {
   get<T>(propertyPath: string): T {
     return super.get(propertyPath) as T;
   }
