@@ -2,8 +2,8 @@ import { readdirSync } from 'fs';
 import { resolve } from 'path';
 
 import {
-  ConfigModule as Config,
-  ConfigService,
+  ConfigModule as BaseConfigModule,
+  ConfigService as BaseConfigService,
   registerAs,
 } from '@nestjs/config';
 
@@ -13,7 +13,7 @@ const ROOT_DIR = 'dist';
 
 export const ConfigModule = {
   forRoot: (dir = 'configs'): DynamicModule =>
-    Config.forRoot({
+    BaseConfigModule.forRoot({
       isGlobal: true,
       load: readdirSync(resolve(ROOT_DIR, dir))
         .filter((file) => !file.includes('index.js'))
@@ -26,4 +26,8 @@ export const ConfigModule = {
     }),
 };
 
-export { ConfigService };
+export class ConfService extends BaseConfigService {
+  get<T>(propertyPath: string): T {
+    return super.get(propertyPath) as T;
+  }
+}
