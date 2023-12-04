@@ -22,7 +22,7 @@ export class RequestError extends HttpException {
 }
 export class AuthorizationError extends HttpException {
   constructor() {
-    super('', HttpStatus.AccountError);
+    super('', HttpStatus.AuthorizationError);
   }
 }
 export class AccountError extends HttpException {
