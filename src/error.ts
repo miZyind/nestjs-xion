@@ -102,6 +102,7 @@ export class ErrorFilter implements ExceptionFilter {
     }
     if (status === HttpStatus.InternalServerError) {
       this.logger.error(`${request.method} ${request.url}: ${error.message}`);
+      console.error(error);
     }
 
     response.status(status).json(body);
