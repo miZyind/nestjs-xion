@@ -25,7 +25,7 @@ export class StandardResponseInterceptor<T>
         code: 0,
         message: 'Success',
         data:
-          data instanceof Array ? { data, total: data.length } : data ?? null,
+          data instanceof Array ? { data, total: data.length } : (data ?? null),
       })),
     );
   }

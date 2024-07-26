@@ -3,7 +3,7 @@
   "compilerOptions": {
     /* Project Options */
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "Node16",
     "rootDir": "src",
     "outDir": "lib",
     "declaration": true,
@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     /* Linter Checks */
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -27,7 +27,6 @@
     "experimentalDecorators": true,
     /* Advanced */
     "forceConsistentCasingInFileNames": true,
-    "preserveConstEnums": true,
     "resolveJsonModule": true,
     "skipLibCheck": true
   }

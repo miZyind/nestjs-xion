@@ -1,10 +1,14 @@
-import { constantCase } from 'case-anything';
-
 import { Catch, HttpException, Logger } from '@nestjs/common';
 
 import type { Request, Response } from 'express';
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import type { StandardResponse } from './model';
+
+const constantCase = (i: string): string =>
+  i
+    .split(/[^\p{L}\d]+/gu)
+    .map((o) => o.toUpperCase())
+    .join('_');
 
 enum HttpStatus {
   RequestError = 400,

@@ -29,7 +29,7 @@ XION, short for **eXcogitative Integration Of NestJS**.
 
 ## 🖋 Author
 
-miZyind <mizyind@gmail.com>
+miZyind <mizyind.dev>
 
 ## 📇 License
 
