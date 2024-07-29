@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "@types/node": "^20.14.12",
-    "eslint-plugin-mizyind": "^6.0.3",
+    "@types/node": "^22.0.0",
+    "eslint-plugin-mizyind": "^6.0.7",
     "semantic-release": "^24.0.0",
     "typescript": "^5.5.4"
   },
