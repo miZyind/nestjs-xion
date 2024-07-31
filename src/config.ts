@@ -19,9 +19,10 @@ export const ConfigModule = {
       load: readdirSync(resolve(ROOT_DIR, CONFIG_DIR))
         .filter((file) => !file.includes('index.js'))
         .map((file) =>
-          registerAs(
-            file.replace('.js', '').toUpperCase(),
-            () => import(resolve(ROOT_DIR, CONFIG_DIR, file)),
+          registerAs(file.replace('.js', '').toUpperCase(), () =>
+            import(resolve(ROOT_DIR, CONFIG_DIR, file)).then(
+              (i: { default: unknown }) => i.default,
+            ),
           ),
         ),
     }),
