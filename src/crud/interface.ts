@@ -1,3 +1,4 @@
+import type { ObjectLiteral, SelectQueryBuilder } from 'typeorm';
 import type { CondOperator } from './constant';
 
 export interface Request {
@@ -61,9 +62,10 @@ export interface QuerySort<T> {
   order: 'ASC' | 'DESC';
 }
 
-export interface CRUDOptions<T> {
+export interface CRUDOptions<T extends ObjectLiteral> {
   allow?: (keyof T)[];
   exclude?: (keyof T)[];
   join?: JoinOptions;
   sort?: QuerySort<T>[];
+  extend?: (qb: SelectQueryBuilder<T>) => SelectQueryBuilder<T>;
 }

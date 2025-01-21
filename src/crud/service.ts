@@ -15,11 +15,11 @@ import type {
   DataSourceOptions,
   EntityMetadata,
   FindOneOptions,
+  ObjectLiteral,
   Repository,
   SelectQueryBuilder,
 } from 'typeorm';
 import type { StandardList } from '../model';
-import type { ObjectLiteral } from '../type';
 import type {
   AllowedOptions,
   CRUDOptions,
@@ -132,7 +132,6 @@ export class CRUDService<T extends ObjectLiteral> {
     ) {
       req.search.$and = req.search.$and.filter((o) => Object.keys(o).length);
     }
-
     if (
       hasValue(req.search.$or) &&
       req.search.$or.length > MIN_QUERY_BUILDER_CONDITION_LENGTH
@@ -147,9 +146,11 @@ export class CRUDService<T extends ObjectLiteral> {
 
       Object.keys(join).forEach((field) => this.setJoin(field, join, builder));
     }
-
     if (options.sort) {
       builder.orderBy(this.mapSort(options.sort));
+    }
+    if (hasValue(options.extend)) {
+      options.extend(builder);
     }
 
     const [data, total] = await builder

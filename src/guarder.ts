@@ -1,4 +1,4 @@
-import type { ObjectLiteral } from './type';
+import type { ObjectLiteral } from 'typeorm';
 
 export function hasValue<T>(v: T | null | undefined | void): v is T {
   return typeof v !== 'undefined' && v !== null;
