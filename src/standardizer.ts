@@ -28,7 +28,7 @@ export function Standardized<T>(type?: Type<T>): Type<StandardResponse<T>> {
 }
 
 export function StandardizedList<T>(
-  type: Type<T> | string,
+  type: Type<T> | 'string',
   dtoName?: string,
   example?: unknown[],
 ): Type<StandardResponse<StandardList<T>>> {

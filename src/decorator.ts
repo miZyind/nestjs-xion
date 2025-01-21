@@ -90,14 +90,14 @@ export function ApiStandardListResponse<T>(
 ): MethodDecorator;
 export function ApiStandardListResponse(
   options: ApiResponseOptions & {
-    type: string;
+    type: 'string';
     dtoName: string;
     example: unknown[];
   },
 ): MethodDecorator;
 export function ApiStandardListResponse<T>(
   options: ApiResponseOptions & {
-    type: Type<T> | string;
+    type: Type<T> | 'string';
     dtoName?: string;
     example?: unknown[];
   },

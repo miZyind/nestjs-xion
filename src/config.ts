@@ -7,13 +7,11 @@ import {
   registerAs,
 } from '@nestjs/config';
 
-import type { DynamicModule } from '@nestjs/common';
-
 const ROOT_DIR = 'dist';
 const CONFIG_DIR = 'configs';
 
 export const ConfigModule = {
-  forRoot: (): DynamicModule =>
+  forRoot: (): ReturnType<typeof BaseConfigModule.forRoot> =>
     BaseConfigModule.forRoot({
       isGlobal: true,
       load: readdirSync(resolve(ROOT_DIR, CONFIG_DIR))
