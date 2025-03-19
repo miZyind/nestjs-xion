@@ -13,29 +13,29 @@
     "semantic-release": "semantic-release"
   },
   "engines": {
-    "node": ">=20",
-    "yarn": ">=1.22.19"
+    "node": ">=22",
+    "yarn": ">=1.22.22"
   },
   "packageManager": "yarn@1.22.22",
   "dependencies": {
-    "@nestjs/common": "^11.0.3",
-    "@nestjs/config": "^4.0.0",
-    "@nestjs/core": "^11.0.3",
-    "@nestjs/passport": "^11.0.4",
-    "@nestjs/swagger": "^11.0.2",
+    "@nestjs/common": "^11.0.11",
+    "@nestjs/config": "^4.0.1",
+    "@nestjs/core": "^11.0.11",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/swagger": "^11.0.6",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "passport": "^0.7.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1",
-    "typeorm": "0.3.20"
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.21"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^22.10.7",
-    "eslint-plugin-mizyind": "^6.0.10",
-    "semantic-release": "^24.2.1",
-    "typescript": "^5.7.3"
+    "@types/node": "^22.13.10",
+    "eslint-plugin-mizyind": "^7.0.0",
+    "semantic-release": "^24.2.3",
+    "typescript": "^5.8.2"
   },
   "keywords": [
     "nestjs",
