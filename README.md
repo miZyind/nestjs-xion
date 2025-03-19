@@ -2,7 +2,7 @@
 
 [![NodeJS](https://img.shields.io/node/v/nestjs-xion?style=for-the-badge&label=&color=339933&logo=node.js&logoColor=fff)](https://nodejs.org)
 [![NPM](https://img.shields.io/npm/v/nestjs-xion?style=for-the-badge&label=&color=cb3837&logo=npm&logoColor=fff)](https://www.npmjs.com/package/nestjs-xion)
-[![Yarn](https://img.shields.io/badge/-~=1.22-2c8ebb?style=for-the-badge&label=&logo=yarn&logoColor=fff)](https://classic.yarnpkg.com)
+[![Yarn](https://img.shields.io/badge/-=1.22.22-2c8ebb?style=for-the-badge&label=&logo=yarn&logoColor=fff)](https://classic.yarnpkg.com)
 [![NestJS](https://img.shields.io/github/package-json/dependency-version/mizyind/nestjs-xion/@nestjs/common?style=for-the-badge&label=&color=e0234e&logo=nestjs&logoColor=fff)](https://nestjs.com)
 [![TypeScript](https://img.shields.io/github/package-json/dependency-version/mizyind/nestjs-xion/dev/typescript?style=for-the-badge&label=&color=007acc&logo=typescript&logoColor=fff)](https://www.typescriptlang.org)
 [![Prettier](https://img.shields.io/npm/dependency-version/eslint-plugin-mizyind/prettier?style=for-the-badge&label=&color=f7b93e&logo=prettier&logoColor=000)](https://prettier.io)
