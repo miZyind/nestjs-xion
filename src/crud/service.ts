@@ -274,9 +274,7 @@ export class CRUDService<T extends ObjectLiteral> {
         break;
     }
 
-    if (params === null) {
-      params = { [param]: cond.value };
-    }
+    params ??= { [param]: cond.value };
 
     return { str, params };
   }
@@ -382,7 +380,11 @@ export class CRUDService<T extends ObjectLiteral> {
       builder,
     ] as const;
 
-    this[condition === '$and' ? 'setAndWhere' : 'setOrWhere'](...args);
+    if (condition === '$and') {
+      this.setAndWhere(...args);
+    } else {
+      this.setOrWhere(...args);
+    }
   }
 
   private builderAddBrackets(
