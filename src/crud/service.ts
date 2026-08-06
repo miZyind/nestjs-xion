@@ -63,7 +63,7 @@ export class CRUDService<T extends ObjectLiteral> {
   ];
 
   constructor(protected repo: Repository<T>) {
-    this.dbName = this.repo.metadata.connection.options.type;
+    this.dbName = this.repo.metadata.dataSource.options.type;
     this.entityColumns = this.repo.metadata.columns.map((prop) => {
       if (prop.embeddedMetadata) {
         this.entityColumnsHash[prop.propertyPath] = prop.databasePath;
@@ -168,7 +168,7 @@ export class CRUDService<T extends ObjectLiteral> {
   ): { str: string; params: Record<string, unknown> } {
     const field = this.getFieldWithAlias(cond.field);
     const likeOperator = this.dbName === 'postgres' ? 'ILIKE' : 'LIKE';
-    let str = `${field} = :${param}`;
+    let str: string;
     let params: Record<string, unknown> | null = null;
 
     switch (cond.operator) {

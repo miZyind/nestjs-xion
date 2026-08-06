@@ -14,7 +14,6 @@
     "strict": true,
     /* Module Resolution */
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "moduleResolution": "Node16",
     /* Linter Checks */
