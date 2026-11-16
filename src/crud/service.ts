@@ -42,6 +42,13 @@ interface Relation {
   allowedColumns: string[];
 }
 
+const COND_OPERATORS = new Set<string>(Object.values(CondOperator));
+const isCondOperator = (key: string): key is CondOperator =>
+  COND_OPERATORS.has(key);
+// Unknown keys fall back to equality, matching the default branch of mapOperatorsToQuery
+const toCondOperator = (key: string): CondOperator =>
+  isCondOperator(key) ? key : CondOperator.Equals;
+
 export class CRUDService<T extends ObjectLiteral> {
   protected dbName: DataSourceOptions['type'];
 
@@ -312,7 +319,7 @@ export class CRUDService<T extends ObjectLiteral> {
           condition,
           field,
           value,
-          operator as CondOperator,
+          toCondOperator(operator),
         );
       }
     } else if (operators.length > MIN_COLUMN_CHAIN_LENGTH) {
@@ -353,7 +360,7 @@ export class CRUDService<T extends ObjectLiteral> {
                 condition,
                 field,
                 value,
-                operator as CondOperator,
+                toCondOperator(operator),
               );
             }
           });

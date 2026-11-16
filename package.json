@@ -33,9 +33,13 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.6",
-    "eslint-plugin-mizyind": "^9.0.9",
+    "eslint-plugin-mizyind": "^9.0.10",
     "semantic-release": "^25.0.9",
     "typescript": "^6.0.3"
+  },
+  "resolutions": {
+    "**/eslint-plugin-react/minimatch": "^3.1.5",
+    "minimatch": "^11.0.8"
   },
   "keywords": [
     "nestjs",
