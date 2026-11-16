@@ -54,7 +54,7 @@ export class ErrorFilter implements ExceptionFilter {
       message: 'Internal server error, please contact the developers',
       data: null,
     };
-    let status = HttpStatus.InternalServerError;
+    let status: number = HttpStatus.InternalServerError;
 
     if (
       error instanceof HttpException ||
